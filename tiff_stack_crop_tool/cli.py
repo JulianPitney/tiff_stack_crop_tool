@@ -1,7 +1,7 @@
 """Console script for tiff_stack_crop_tool."""
 import argparse
 import sys
-from tiff_stack_crop_tool import crop_all_stacks
+from tiff_stack_crop_tool.tiff_stack_crop_tool import crop_all_stacks
 
 
 def main():
@@ -17,9 +17,7 @@ def main():
                              'oke mask tiffs should be named following this example: If <scans_dir> has a file called'
                              'scan1.tif, the corresponding stroke mask should be named scan1_stroke_mask.tif')
 
-    args = parser.parse_args()
-    print("Arguments: " + str(args))
-    args = vars(args)
+    args = vars(parser.parse_args())
     crop_all_stacks(args)
     return 0
 

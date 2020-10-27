@@ -1,6 +1,6 @@
 """Main module."""
-import zStackUtils as zsu
-import selectinwindow
+import tiff_stack_crop_tool.zStackUtils as zsu
+import tiff_stack_crop_tool.selectinwindow as selectinwindow
 import sys
 import cv2
 import math

@@ -12,10 +12,10 @@ with open('HISTORY.rst') as history_file:
 
 requirements = [
     'opencv-python==3.2.0.6',
-    'tiffile==2020.10.1',
-    'imagecodecs==2020.5.30',
+    'tiffile',
+    'imagecodecs',
     'numpy==1.19.2',
-    'pywin32==228',
+    'pywin32',
 ]
 
 
@@ -48,6 +48,6 @@ setup(
     name='tiff_stack_crop_tool',
     packages=find_packages(include=['tiff_stack_crop_tool', 'tiff_stack_crop_tool.*']),
     url='https://github.com/JulianPitney/tiff_stack_crop_tool',
-    version='0.1',
+    version='0.6',
     zip_safe=False,
 )
