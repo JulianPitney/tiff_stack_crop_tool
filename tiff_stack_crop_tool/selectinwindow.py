@@ -353,6 +353,8 @@ def clearCanvasNDraw(dragObj):
     cv2.rectangle(tmp, (dragObj.outRect.x, dragObj.outRect.y),
                   (dragObj.outRect.x + dragObj.outRect.w,
                    dragObj.outRect.y + dragObj.outRect.h), (0, 255, 0), 4)
+    cv2.putText(tmp, "w = " + str(dragObj.outRect.w), (20, 50), cv2.FONT_HERSHEY_SIMPLEX, 2.0, (255, 255, 255), 4)
+    cv2.putText(tmp, "h = " + str(dragObj.outRect.h), (20, 120), cv2.FONT_HERSHEY_SIMPLEX, 2.0, (255, 255, 255), 4)
     drawSelectMarkers(tmp, dragObj)
     cv2.imshow(dragObj.wname, tmp)
     cv2.waitKey()
@@ -362,53 +364,56 @@ def clearCanvasNDraw(dragObj):
 
 def drawSelectMarkers(image, dragObj):
     # Top-Left
+    markerSizePx = 20
+
+
     cv2.rectangle(image, (int(dragObj.outRect.x - dragObj.sBlk),
                           int(dragObj.outRect.y - dragObj.sBlk)),
                   (int(dragObj.outRect.x - dragObj.sBlk + dragObj.sBlk * 2),
                    int(dragObj.outRect.y - dragObj.sBlk + dragObj.sBlk * 2)),
-                  (0, 255, 0), 10)
+                  (0, 255, 0), markerSizePx)
     # Top-Rigth
     cv2.rectangle(image, (int(dragObj.outRect.x + dragObj.outRect.w - dragObj.sBlk),
                           int(dragObj.outRect.y - dragObj.sBlk)),
                   (int(dragObj.outRect.x + dragObj.outRect.w - dragObj.sBlk + dragObj.sBlk * 2),
                    int(dragObj.outRect.y - dragObj.sBlk + dragObj.sBlk * 2)),
-                  (0, 255, 0), 10)
+                  (0, 255, 0), markerSizePx)
     # Bottom-Left
     cv2.rectangle(image, (int(dragObj.outRect.x - dragObj.sBlk),
                           int(dragObj.outRect.y + dragObj.outRect.h - dragObj.sBlk)),
                   (int(dragObj.outRect.x - dragObj.sBlk + dragObj.sBlk * 2),
                    int(dragObj.outRect.y + dragObj.outRect.h - dragObj.sBlk + dragObj.sBlk * 2)),
-                  255, 10)
+                  (0, 255, 0), markerSizePx)
     # Bottom-Right
     cv2.rectangle(image, (int(dragObj.outRect.x + dragObj.outRect.w - dragObj.sBlk),
                           int(dragObj.outRect.y + dragObj.outRect.h - dragObj.sBlk)),
                   (int(dragObj.outRect.x + dragObj.outRect.w - dragObj.sBlk + dragObj.sBlk * 2),
                    int(dragObj.outRect.y + dragObj.outRect.h - dragObj.sBlk + dragObj.sBlk * 2)),
-                  (0, 255, 0), 10)
+                  (0, 255, 0), markerSizePx)
 
     # Top-Mid
     cv2.rectangle(image, (int(dragObj.outRect.x + dragObj.outRect.w / 2 - dragObj.sBlk),
                           int(dragObj.outRect.y - dragObj.sBlk)),
                   (int(dragObj.outRect.x + dragObj.outRect.w / 2 - dragObj.sBlk + dragObj.sBlk * 2),
                    int(dragObj.outRect.y - dragObj.sBlk + dragObj.sBlk * 2)),
-                  (0, 255, 0), 10)
+                  (0, 255, 0), markerSizePx)
     # Bottom-Mid
     cv2.rectangle(image, (int(dragObj.outRect.x + dragObj.outRect.w / 2 - dragObj.sBlk),
                           int(dragObj.outRect.y + dragObj.outRect.h - dragObj.sBlk)),
                   (int(dragObj.outRect.x + dragObj.outRect.w / 2 - dragObj.sBlk + dragObj.sBlk * 2),
                    int(dragObj.outRect.y + dragObj.outRect.h - dragObj.sBlk + dragObj.sBlk * 2)),
-                  (0, 255, 0), 10)
+                  (0, 255, 0), markerSizePx)
     # Left-Mid
     cv2.rectangle(image, (int(dragObj.outRect.x - dragObj.sBlk),
                           int(dragObj.outRect.y + dragObj.outRect.h / 2 - dragObj.sBlk)),
                   (int(dragObj.outRect.x - dragObj.sBlk + dragObj.sBlk * 2),
                    int(dragObj.outRect.y + dragObj.outRect.h / 2 - dragObj.sBlk + dragObj.sBlk * 2)),
-                  (0, 255, 0), 10)
+                  (0, 255, 0), markerSizePx)
     # Right-Mid
     cv2.rectangle(image, (int(dragObj.outRect.x + dragObj.outRect.w - dragObj.sBlk),
                           int(dragObj.outRect.y + dragObj.outRect.h / 2 - dragObj.sBlk)),
                   (int(dragObj.outRect.x + dragObj.outRect.w - dragObj.sBlk + dragObj.sBlk * 2),
                    int(dragObj.outRect.y + dragObj.outRect.h / 2 - dragObj.sBlk + dragObj.sBlk * 2)),
-                  (0, 255, 0), 10)
+                  (0, 255, 0), markerSizePx)
 
 # enddef
