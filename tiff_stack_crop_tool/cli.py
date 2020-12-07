@@ -16,6 +16,11 @@ def main():
                              'he <scans_dir> directory and this pairing should have identical ZYX dimensions. The str'
                              'oke mask tiffs should be named following this example: If <scans_dir> has a file called'
                              'scan1.tif, the corresponding stroke mask should be named scan1_stroke_mask.tif')
+    parser.add_argument('--W', metavar='<INIT_W', dest='INIT_W', action='store', required=True,
+                        help='An integer value representing the width of the cropping box.')
+
+    parser.add_argument('--H', metavar='<INIT_H', dest='INIT_H', action='store', required=True,
+                        help='An integer value representing the height of the cropping box.')
 
     args = vars(parser.parse_args())
     crop_all_stacks(args)

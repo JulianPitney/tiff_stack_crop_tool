@@ -7,7 +7,6 @@ import math
 import numpy as np
 import tifffile
 import os
-from win32api import GetSystemMetrics
 sys.setrecursionlimit(10 ** 9)
 
 
@@ -101,7 +100,7 @@ def paint_cropping_overlays(xProj, colors, stackDims):
         paint_cropping_text_z(xProj, colors)
 
 
-def crop3D(scanFullPath, cropFullPath, maskFullPath=None):
+def crop3D(scanFullPath, cropFullPath, maskFullPath=None, initW=0, initH=0):
 
     global stackDims, xProjDims
 
@@ -155,7 +154,7 @@ def crop3D(scanFullPath, cropFullPath, maskFullPath=None):
     CROP_WINDOW_XY_PROJ = "CROP_XY_PROJ"
     cv2.namedWindow(CROP_WINDOW_XY_PROJ, cv2.WINDOW_NORMAL)
     cv2.moveWindow(CROP_WINDOW_XY_PROJ, 0, 0)
-    cv2.resizeWindow(CROP_WINDOW_XY_PROJ,GetSystemMetrics(0), GetSystemMetrics(1))
+    cv2.resizeWindow(CROP_WINDOW_XY_PROJ, 1920, 1080)
     cv2.setMouseCallback(CROP_WINDOW_XY_PROJ, click_and_z_crop)
     print("Cropping " + str(scanFullPath))
     while True:
@@ -185,10 +184,10 @@ def crop3D(scanFullPath, cropFullPath, maskFullPath=None):
 
     # XY Cropping
     rectI = selectinwindow.dragRect
-    selectinwindow.init(rectI, zProj, CROP_WINDOW_Z_PROJ, stackDims['x'], stackDims['y'])
+    selectinwindow.init(rectI, zProj, CROP_WINDOW_Z_PROJ, stackDims['x'], stackDims['y'], initW, initH)
     cv2.namedWindow(CROP_WINDOW_Z_PROJ, cv2.WINDOW_NORMAL)
     cv2.moveWindow(CROP_WINDOW_Z_PROJ, 0, 0)
-    cv2.resizeWindow(CROP_WINDOW_Z_PROJ,GetSystemMetrics(0), GetSystemMetrics(1))
+    cv2.resizeWindow(CROP_WINDOW_Z_PROJ, 1920, 1080)
     cv2.setMouseCallback(CROP_WINDOW_Z_PROJ, selectinwindow.dragrect, rectI)
     cv2.imshow(CROP_WINDOW_Z_PROJ, zProj)
     cv2.waitKey(0)
@@ -262,7 +261,14 @@ def crop_all_stacks(args):
             if not os.path.isfile(maskFullPath):
                 print("No file was found at " + maskFullPath + " . Exiting.")
                 exit(0)
-            crop3D(scanFullPath, croppedFullPath, maskFullPath)
+
+            initW = int(args.get('INIT_W'))
+            initH = int(args.get('INIT_H'))
+            if initW >=0 and initH >= 0:
+                crop3D(scanFullPath, croppedFullPath, maskFullPath, initW=initW, initH=initH)
+            else:
+                print("One or both of the following values are invalid: --W, --H.")
+                exit(0)
 
         else:
-            crop3D(scanFullPath, croppedFullPath)
+            crop3D(scanFullPath, croppedFullPath, initW=initW, initH=initH)
