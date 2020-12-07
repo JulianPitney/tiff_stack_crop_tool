@@ -61,9 +61,9 @@ class dragRect:
 
     # FLAGS
     # Rect already present
-    active = False
+    active = True
     # Drag for rect resize in progress
-    drag = False
+    drag = True
     # Marker flags by positions
     TL = False
     TM = False
