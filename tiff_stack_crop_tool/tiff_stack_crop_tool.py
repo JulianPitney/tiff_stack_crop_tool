@@ -154,6 +154,8 @@ def crop3D(scanFullPath, cropFullPath, maskFullPath=None, initW=0, initH=0):
     CROP_WINDOW_XY_PROJ = "CROP_XY_PROJ"
     cv2.namedWindow(CROP_WINDOW_XY_PROJ, cv2.WINDOW_NORMAL)
     cv2.moveWindow(CROP_WINDOW_XY_PROJ, 0, 0)
+
+
     cv2.resizeWindow(CROP_WINDOW_XY_PROJ, 1920, 1080)
     cv2.setMouseCallback(CROP_WINDOW_XY_PROJ, click_and_z_crop)
     print("Cropping " + str(scanFullPath))
@@ -187,7 +189,16 @@ def crop3D(scanFullPath, cropFullPath, maskFullPath=None, initW=0, initH=0):
     selectinwindow.init(rectI, zProj, CROP_WINDOW_Z_PROJ, stackDims['x'], stackDims['y'], initW, initH)
     cv2.namedWindow(CROP_WINDOW_Z_PROJ, cv2.WINDOW_NORMAL)
     cv2.moveWindow(CROP_WINDOW_Z_PROJ, 0, 0)
-    cv2.resizeWindow(CROP_WINDOW_Z_PROJ, 1920, 1080)
+
+    # figure out dimensions of XY_PROJ
+    print(zProj.shape)
+    zProj_yDim = zProj.shape[0]
+    zProj_xDim = zProj.shape[1]
+    scalingMultiple = math.ceil(zProj_yDim / 1080)
+    windowY = math.ceil(zProj_yDim / scalingMultiple)
+    windowX = math.ceil(zProj_xDim / scalingMultiple)
+
+    cv2.resizeWindow(CROP_WINDOW_Z_PROJ, windowX, windowY)
     cv2.setMouseCallback(CROP_WINDOW_Z_PROJ, selectinwindow.dragrect, rectI)
     cv2.imshow(CROP_WINDOW_Z_PROJ, zProj)
     cv2.waitKey(0)
